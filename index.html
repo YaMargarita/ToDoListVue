@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ToDoList Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="app">
+    <header class="header">
+        <div class="container">
+            <div class="header-wrapper">
+                <h1 id="title">ToDo List</h1>
+                <form action="">
+                    <input type="text" v-model="textInput" class="inputText" placeholder="Enter your task">
+                    <button v-on:click="addTask"
+                            v-on:keypress.enter="addTask"
+                            class="addTask">
+                        Add a new task
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <h2>ToDo <span class="count"></span></h2>
+            <ul>
+                <li v-for="(item, index) in currentTasks"
+                    :key="item.id">
+                    <div class="task">
+                        <input type="checkbox" v-on:change="checkTask(index, 'current')" class="current_check">
+                        <input type="text" v-model="item.taskTitle" disabled="disabled" v-on:change="changeTask(index, $event)" class="inputTask">
+                        <div class="button-wrapper">
+                            <button class="edit_btn btn" v-on:click="editTask()">Edit</button>
+                            <button class="task_btn btn" v-on:click="removeTask(index, 'current')">Remove</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <h2>Done<span></span></h2>
+            <ul>
+                <li v-for="(item, index) in doneTasks"
+                    :key="item.id">
+                    <div class="task">
+                        <input type="checkbox" v-on:change="checkTask(index, 'done')" checked>
+                        <span class="task_title">{{ item.taskTitle }}</span>
+                        <div class="button-wrapper_done">
+                            <button class="task_btn btn" v-on:click="removeTask(index, 'done')">Remove</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
